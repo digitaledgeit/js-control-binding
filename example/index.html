@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Control Binding &mdash; Example</title>
+</head>
+<body>
+
+	<div class="control js-name-control">
+		<label>
+			Your name:
+			<input class="control__input js-input" autofocus/>
+		</label>
+		<div class="control__container js-feedback-container">
+			<span class="control__message js-feedback-message"></span>
+		</div>
+	</div>
+
+	<script src="../build/build.js"></script>
+	<script>
+
+		var Control = require('control');
+		var binding = require('control-binding');
+
+		//trim whitespace from front and back
+		var trim        = function(val) { return typeof val === 'string' ? val.replace(/^\s+/, '').replace(/\s+$/, '') : val; };
+		var required    = function(val) { return typeof val === 'string' && val.length > 0; };
+
+		//mock the model
+		var model = {
+
+			attr: {},
+
+			get: function(name) {
+				return this.attr['name'];
+			},
+
+			set: function(name, value) {
+				this.attr[name] = value;
+				this.emit('change:'+name, value);
+			}
+
+		};
+		require('emitter')(model);
+
+		//create a control
+		var control = Control.create({
+			el:             document.querySelector('.js-name-control'),
+			filters:        [trim],
+			validators:     [[required, 'Your name is required so we can contact you.']]
+		}).use(binding({
+			model:          model,
+			property:       'name'
+		}));
+
+		model.on('change:name', function(value) {
+			console.log('Name changed to '+value);
+		});
+
+	</script>
+
+</body>
+</html>

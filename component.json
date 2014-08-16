@@ -1,0 +1,12 @@
+{
+	"name": "control-binding",
+	"scripts": [
+		"index.js"
+	],
+	"development": {
+		"dependencies": {
+			"component/assert": "*",
+			"nib-health-funds/control": "d4fe8bb83b6cb9f531679b5da498388ddc03b3e7"
+		}
+	}
+}
