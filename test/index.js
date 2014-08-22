@@ -76,6 +76,22 @@ function setupDateControl() {
 
 describe('control-binding', function() {
 
+  it('should update the control on initialisation', function() {
+
+    model = createModel();
+    model.set('firstName', 'John');
+
+    control = Control.create({
+      el:           document.createElement('div')
+    }).use(plugin({
+      model:      model,
+      property:   'firstName'
+    }));
+
+    assert.equal('John', control.getValue());
+
+  });
+
 	it('should update the control when the model value changes', function() {
 
 		setupFirstNameControl();
