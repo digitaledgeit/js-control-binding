@@ -1,3 +1,17 @@
+
+/**
+ * Convert an undefined or null value to the empty string
+ * @param   {*} value
+ * @returns {*}
+ */
+function convertToEmpty(value) {
+  if (value == undefined || value == null) {
+    return '';
+  } else {
+    return value;
+  }
+}
+
 /**
  * Creates a control plugin that binds the control value to a model
  * @param   {Object} options
@@ -9,59 +23,64 @@
  */
 module.exports = function(options) {
 
-	var
-		model       = options.model,
-		property    = options.property,
-		mapper      = options.mapper,
-		event       = options.event || 'validate'
-	;
+  var
+    model       = options.model,
+    property    = options.property,
+    mapper      = options.mapper,
+    event       = options.event || 'validate'
+  ;
 
-	return function(control) {
+  return function(control) {
 
-		/**
-		 * Map a value to the control
-		 * @param   {*} value
-		 */
-		function mapToControl(value) {
+    /**
+     * Map a value to the control
+     * @param   {*} value
+     */
+    function mapToControl(value) {
 
-			//map the model value to a format fit for the control
-			if (mapper && mapper.toControl) {
-				value = mapper.toControl(value);
-			}
+      //map the model value to a format fit for the control
+      if (mapper && mapper.toControl) {
+        value = mapper.toControl(value);
+      }
 
-			//set the control value
-			control.setValue(value);
-		}
+      //set the control value
+      control.setValue(convertToEmpty(value));
+    }
 
-		/**
-		 * Map a value to a property on the model
-		 * @param   {*} value
-		 */
-		function mapToModel(value) {
+    /**
+     * Map a value to a property on the model
+     * @param   {*} value
+     */
+    function mapToModel(value) {
 
-			//map the control value to a format fit for the model
-			if (mapper && mapper.toModel) {
-				value = mapper.toModel(value);
-			}
+      //map the control value to a format fit for the model
+      if (mapper && mapper.toModel) {
+        value = mapper.toModel(value);
+      }
 
-			//set the model property
-			model.set(property, value, {silent: true});
-		}
+      //set the model property
+      model.set(property, value);
+    }
 
-		//bind to control events
-		if (event === 'validate') {
-			control.on('validate', function(valid, value) {
-				if (valid) mapToModel(value);
-			});
-		} else {
-			control.on(event, function() {
-				mapToModel(control.getValue());
-			});
-		}
+    //bind to control events
+    if (event === 'validate') {
+      control.on('validate', function(valid, value) {
+        if (valid) mapToModel(value);
+      });
+    } else {
+      control.on(event, function() {
+        mapToModel(control.getValue());
+      });
+    }
 
-		//bind to model events
-		model.on('change:'+property, mapToControl);
+    //bind to model events
+    model.on('change:'+property, function(value) {
+      mapToControl(value);
+    });
 
-	};
+    //initialise control from the model
+    mapToControl(model.get(property));
+
+  };
 
 };
