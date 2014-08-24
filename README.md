@@ -17,3 +17,7 @@ Now, when the control is validated the model will be updated, and, when the mode
  - `property` - The model property
  - `mapper` - Methods to map the value between the model and control
  - `event` - The control event(s) to bind to e.g. `validate` or `change`
+
+## Known Issues
+
+ - On most observables you cannot set properties to be instances of a class because of the way the properties of objects are set
