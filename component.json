@@ -6,7 +6,7 @@
 	"development": {
 		"dependencies": {
 			"component/assert": "*",
-			"nib-health-funds/control": "~1.1.2"
+			"nib-health-funds/control": "~2.2.1"
 		}
 	}
 }

@@ -19,7 +19,7 @@
 	<script>
 
 		var Control = require('control');
-		var binding = require('control-binding');
+		var binding = require('control-model-binding');
 
 		//trim whitespace from front and back
 		var trim        = function(val) { return typeof val === 'string' ? val.replace(/^\s+/, '').replace(/\s+$/, '') : val; };
@@ -31,16 +31,19 @@
 			attr: {},
 
 			get: function(name) {
-				return this.attr['name'];
+				return this.attr[name];
 			},
 
 			set: function(name, value) {
+				var changed = this.attr[name] !== value;
 				this.attr[name] = value;
-				this.emit('change:'+name, value);
+				if (changed) this.emit('change:'+name, value);
 			}
 
 		};
 		require('emitter')(model);
+
+		model.attr.name = 'Jeff';
 
 		//create a control
 		var control = Control.create({
@@ -57,7 +60,7 @@
 		});
 
 		control.on('validate', function(valid) {
-			if (valid) console.log('[control]: Name changed to '+control.getValue());
+			if (valid) console.log('[control]: Name validated as '+control.getValue());
 		});
 
 	</script>
