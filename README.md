@@ -1,5 +1,7 @@
 # control-binding
 
+[![Circle CI](https://circleci.com/gh/digitaledgeit/js-control-model-binding.svg?style=svg)](https://circleci.com/gh/digitaledgeit/js-control-model-binding)
+
 A plugin that binds a model to a [control](https://github.com/nib-health-funds/control).
 
 ## Usage
