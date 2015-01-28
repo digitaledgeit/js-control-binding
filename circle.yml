@@ -1,8 +1,8 @@
 dependencies:
   override:
     - npm install
-    - component build --dev
+    - node ./node_modules/component/bin/component-build --dev
 
 test:
   override:
-    - component test phantom
+    - node ./node_modules/component-test/bin/component-test phantom
