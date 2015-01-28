@@ -1,4 +1,4 @@
-# control-binding
+# control-model-binding
 
 [![Circle CI](https://circleci.com/gh/digitaledgeit/js-control-model-binding.svg?style=svg)](https://circleci.com/gh/digitaledgeit/js-control-model-binding)
 
@@ -19,6 +19,8 @@ Now, when the control is validated the model will be updated, and, when the mode
  - `property` - The model property
  - `mapper` - Methods to map the value between the model and control
  - `event` - The control event(s) to bind to e.g. `validate` or `change`
+ - `init` - Whether to initialise the control value when the plugin is first run. Defaults to `true`.
+ - `initIfHasValue` - Whether to initialise the control value when the value is already set when plugin is first run. Defaults to `false`.
 
 ## Known Issues
 
