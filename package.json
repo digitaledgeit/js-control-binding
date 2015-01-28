@@ -1,0 +1,7 @@
+{
+  "name": "control-model-binding",
+  "devDependencies": {
+    "component": "^1.0.2",
+    "component-test": "^0.1.4"
+  }
+}

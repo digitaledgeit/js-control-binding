@@ -1,0 +1,8 @@
+dependencies:
+  override:
+    - npm install
+    - component build --dev
+
+test:
+  override:
+    - component test phantom
