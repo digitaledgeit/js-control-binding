@@ -22,12 +22,15 @@ function convertToEmpty(value) {
  * @returns {Function}
  */
 module.exports = function(options) {
+  options = options || {};
 
   var
-    model       = options.model,
-    property    = options.property,
-    mapper      = options.mapper,
-    event       = options.event || 'validate'
+    model           = options.model,
+    property        = options.property,
+    mapper          = options.mapper,
+    event           = options.event || 'validate',
+    init            = typeof(options.init) === 'undefined' ? true : options.init,
+    initIfHasValue  = typeof(options.initIfHasValue) === 'undefined' ? false : options.initIfHasValue
   ;
 
   //whether to ignore the change
@@ -111,7 +114,16 @@ module.exports = function(options) {
     });
 
     //initialise control from the model
-    mapToControl(model.get(property));
+    //todo: check `pageshow` `event.persisted` instead of the value when chrome and IE11 fix themselves
+    if (init) {
+      if (control.getValue() != null && control.getValue() != '') {
+        if (initIfHasValue) {
+          mapToControl(model.get(property));
+        }
+      } else {
+        mapToControl(model.get(property));
+      }
+    }
 
   };
 

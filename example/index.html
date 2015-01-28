@@ -28,7 +28,7 @@
 		//mock the model
 		var model = {
 
-			attr: {},
+			attr: {name:'Jeff'},
 
 			get: function(name) {
 				return this.attr[name];
@@ -42,8 +42,6 @@
 
 		};
 		require('emitter')(model);
-
-		model.attr.name = 'Jeff';
 
 		//create a control
 		var control = Control.create({
